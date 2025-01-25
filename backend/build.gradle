@@ -2,6 +2,7 @@ plugins {
 	id 'java'
 	id 'org.springframework.boot' version '3.4.2'
 	id 'io.spring.dependency-management' version '1.1.7'
+	id 'org.liquibase.gradle' version '2.2.0'
 }
 
 group = 'com.realestate'
@@ -19,6 +20,19 @@ repositories {
 
 dependencies {
 	implementation 'org.springframework.boot:spring-boot-starter-web'
+
+	// Spring Boot JPA
+	implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
+	// Liquibase
+	implementation 'org.liquibase:liquibase-core'
+
+	// Use MySQL as an example
+	runtimeOnly 'com.mysql:mysql-connector-j'
+
+	// Lombok (optional)
+	compileOnly 'org.projectlombok:lombok:1.18.28'
+	annotationProcessor 'org.projectlombok:lombok:1.18.28'
+
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
 	testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
 }
