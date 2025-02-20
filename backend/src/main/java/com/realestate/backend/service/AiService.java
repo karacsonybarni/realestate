@@ -16,4 +16,19 @@ public class AiService {
         // Placeholder logic
         return "Try focusing on properties near: " + buyerPreferences;
     }
+
+    public String advancedPropertyRecommendations(String userPreferences) {
+        // Placeholder logic for advanced AI-driven property recommendations
+        return "Based on your preferences, consider properties in: " + userPreferences;
+    }
+
+    public String marketAnalysis(String location) {
+        // Placeholder logic for market analysis
+        return "Market analysis for location: " + location + " shows a positive trend.";
+    }
+
+    public String premiumFeatureExample(String input) {
+        // Placeholder logic for a premium feature
+        return "Premium feature output for input: " + input;
+    }
 }

@@ -40,5 +40,19 @@ public class UserController {
     public void deleteUser(@PathVariable Long id) {
         userService.deleteUser(id);
     }
-}
 
+    @PostMapping("/subscribe")
+    public String subscribeToPremium(@RequestParam Long userId) {
+        return userService.subscribeToPremium(userId);
+    }
+
+    @PostMapping("/unsubscribe")
+    public String unsubscribeFromPremium(@RequestParam Long userId) {
+        return userService.unsubscribeFromPremium(userId);
+    }
+
+    @GetMapping("/premium-feature")
+    public String getPremiumFeature(@RequestParam Long userId) {
+        return userService.getPremiumFeature(userId);
+    }
+}
