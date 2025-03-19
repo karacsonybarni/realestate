@@ -10,7 +10,7 @@ version = '0.0.1-SNAPSHOT'
 
 java {
 	toolchain {
-		languageVersion = JavaLanguageVersion.of(23)
+		languageVersion = JavaLanguageVersion.of(21)
 	}
 }
 
@@ -28,6 +28,9 @@ dependencies {
 
 	// Use MySQL as an example
 	runtimeOnly 'com.mysql:mysql-connector-j'
+	
+	// H2 Database for development
+	runtimeOnly 'com.h2database:h2'
 
 	compileOnly 'org.projectlombok:lombok:1.18.36'
 	annotationProcessor 'org.projectlombok:lombok:1.18.36'
