@@ -1,0 +1,32 @@
+/* Global styles */
+body {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+/* Main content area */
+main {
+  flex: 1;
+}
+
+/* Property card styles */
+.property-card {
+  transition: transform 0.3s ease;
+}
+
+.property-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+}
+
+/* Carousel customization */
+.carousel-item {
+  height: 400px;
+}
+
+/* Property details page */
+.sticky-top {
+  top: 2rem;
+}

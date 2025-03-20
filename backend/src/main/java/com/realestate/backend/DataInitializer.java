@@ -9,6 +9,7 @@ import com.realestate.backend.repository.PropertyRepository;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.Profile;
 
 import java.util.Arrays;
 import java.util.List;
@@ -16,7 +17,9 @@ import java.util.List;
 @Configuration
 public class DataInitializer {
 
+    // This bean is now disabled since we're using Liquibase for data initialization
     @Bean
+    @Profile("manual-init") // This profile will not be active by default
     public CommandLineRunner initDatabase(AppUserRepository userRepository, 
                                          PropertyRepository propertyRepository,
                                          PropertyImageRepository imageRepository) {
