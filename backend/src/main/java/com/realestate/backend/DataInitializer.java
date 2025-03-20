@@ -9,6 +9,7 @@ import com.realestate.backend.repository.PropertyRepository;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.DependsOn;
 
 import java.util.Arrays;
 import java.util.List;
@@ -17,6 +18,7 @@ import java.util.List;
 public class DataInitializer {
 
     @Bean
+    @DependsOn("liquibase")
     public CommandLineRunner initDatabase(AppUserRepository userRepository, 
                                          PropertyRepository propertyRepository,
                                          PropertyImageRepository imageRepository) {
