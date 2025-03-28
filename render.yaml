@@ -1,0 +1,36 @@
+services:
+  # Spring Boot Backend Service
+  - type: web
+    name: realestate-backend
+    env: java
+    buildCommand: cd backend && ./gradlew build -x test
+    startCommand: cd backend && java -jar build/libs/backend-0.0.1-SNAPSHOT.jar
+    repo: https://github.com/karacsonybarni/realestate.git
+    branch: main
+    envVars:
+      - key: PORT
+        value: 8080
+      - key: SPRING_PROFILES_ACTIVE
+        value: prod
+      - key: JAVA_OPTS
+        value: "-Xmx512m"
+    healthCheckPath: /actuator/health
+    autoDeploy: true
+    
+  # MCP Server Service
+  - type: web
+    name: realestate-mcp
+    env: java
+    buildCommand: cd backend && ./gradlew build -x test
+    startCommand: cd backend && java -cp build/libs/backend-0.0.1-SNAPSHOT.jar com.realestate.backend.mcp.MCPServerApplication
+    repo: https://github.com/karacsonybarni/realestate.git
+    branch: feature/mcp-server-implementation
+    envVars:
+      - key: PORT
+        value: 8080
+      - key: SPRING_PROFILES_ACTIVE
+        value: mcp-standalone
+      - key: JAVA_OPTS
+        value: "-Xmx512m"
+    healthCheckPath: /api/mcp/health
+    autoDeploy: true
