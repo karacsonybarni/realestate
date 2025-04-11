@@ -8,6 +8,13 @@ plugins {
 group = 'com.realestate'
 version = '0.0.1-SNAPSHOT'
 
+bootJar {
+	// Add this line
+	mainClass = 'com.realestate.backend.BackendApplication'
+	// OR
+	// mainClass = 'com.realestate.backend.mcp.MCPServerApplication'
+}
+
 java {
 	toolchain {
 		languageVersion = JavaLanguageVersion.of(23)
