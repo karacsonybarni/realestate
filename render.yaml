@@ -2,32 +2,33 @@ services:
   # Spring Boot Backend Service
   - type: web
     name: realestate-backend
-    env: java
+    # env: java  <-- REMOVE THIS LINE
     buildCommand: cd backend && ./gradlew build -x test
-    startCommand: cd backend && java -jar build/libs/backend-0.0.1-SNAPSHOT.jar
+    startCommand: cd backend && java -Dserver.port=$PORT -jar build/libs/backend-0.0.1-SNAPSHOT.jar
     repo: https://github.com/karacsonybarni/realestate.git
     branch: main
     envVars:
-      - key: PORT
-        value: 8080
+      # - key: PORT  <-- REMOVE THIS or ensure your app uses it correctly (see note below)
+      #   value: 8080
       - key: SPRING_PROFILES_ACTIVE
         value: prod
       - key: JAVA_OPTS
         value: "-Xmx512m"
     healthCheckPath: /actuator/health
     autoDeploy: true
-    
+
   # MCP Server Service
   - type: web
     name: realestate-mcp
-    env: java
+    # env: java  <-- REMOVE THIS LINE
     buildCommand: cd backend && ./gradlew build -x test
-    startCommand: cd backend && java -cp build/libs/backend-0.0.1-SNAPSHOT.jar com.realestate.backend.mcp.MCPServerApplication
+    startCommand: cd backend && java -Dserver.port=$PORT -cp build/libs/backend-0.0.1-SNAPSHOT.jar com.realestate.backend.mcp.MCPServerApplication
     repo: https://github.com/karacsonybarni/realestate.git
+    # Note: Using a different branch for this service
     branch: feature/mcp-server-implementation
     envVars:
-      - key: PORT
-        value: 8080
+      # - key: PORT  <-- REMOVE THIS or ensure your app uses it correctly (see note below)
+      #   value: 8080
       - key: SPRING_PROFILES_ACTIVE
         value: mcp-standalone
       - key: JAVA_OPTS
