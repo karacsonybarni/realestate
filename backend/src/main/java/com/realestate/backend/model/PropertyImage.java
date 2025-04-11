@@ -2,6 +2,7 @@ package com.realestate.backend.model;
 
 import jakarta.persistence.*;
 import lombok.*;
+import com.fasterxml.jackson.annotation.JsonBackReference;
 
 @Entity
 @Table(name = "property_image")
@@ -19,5 +20,6 @@ public class PropertyImage {
 
     @ManyToOne
     @JoinColumn(name = "property_id", nullable = false)
+    @JsonBackReference
     private Property property;
 }
