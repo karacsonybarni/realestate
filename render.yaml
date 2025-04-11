@@ -1,30 +1,44 @@
 services:
-  # Spring Boot Backend Service
+  # Spring Boot Backend Service (Using Docker)
   - type: web
     name: realestate-backend
-    buildCommand: cd backend && ./gradlew build -x test
-    startCommand: cd backend && java -Dserver.port=$PORT -jar build/libs/backend-0.0.1-SNAPSHOT.jar
+    runtime: docker # Specify Docker runtime
+    dockerfilePath: ./Dockerfile # Path to your Dockerfile from the repo root
     repo: https://github.com/karacsonybarni/realestate.git
     branch: main
+    # buildCommand and startCommand are NOT needed when runtime: docker is used
+    # The Dockerfile defines the build and start process
     envVars:
       - key: SPRING_PROFILES_ACTIVE
-        value: prod
-      - key: JAVA_OPTS
-        value: "-Xmx512m"
-    healthCheckPath: /actuator/health
+        value: prod # Overrides the ENV in Dockerfile if needed
+      - key: JAVA_OPTS # Passed to the JVM inside the container
+        value: "-Xmx512m -Dserver.port=${PORT}" # IMPORTANT: Inject Render's PORT here!
+      # Add other backend-specific env vars here (DB URLs, secrets, etc.)
+      # - key: DATABASE_URL
+      #   fromDatabase:
+      #     name: your-db-name
+      #     property: connectionString
+    healthCheckPath: /actuator/health # Ensure this path is correct within your app
     autoDeploy: true
+    # Optional: Specify Docker build context if Dockerfile isn't in the root
+    # dockerContext: ./backend
 
-  # MCP Server Service
+  # MCP Server Service (Using the SAME Dockerfile, different start command)
   - type: web
     name: realestate-mcp
-    buildCommand: cd backend && ./gradlew build -x test
-    startCommand: cd backend && java -Dserver.port=$PORT -cp build/libs/backend-0.0.1-SNAPSHOT.jar com.realestate.backend.mcp.MCPServerApplication
+    runtime: docker # Specify Docker runtime
+    dockerfilePath: ./Dockerfile # Path to your Dockerfile
     repo: https://github.com/karacsonybarni/realestate.git
-    branch: feature/mcp-server-implementation
+    branch: feature/mcp-server-implementation # Different branch for this service
+    # Override the Dockerfile's ENTRYPOINT/CMD with a specific start command
+    dockerCommand: java -cp app.jar com.realestate.backend.mcp.MCPServerApplication # Command to run inside the container
     envVars:
       - key: SPRING_PROFILES_ACTIVE
-        value: mcp-standalone
-      - key: JAVA_OPTS
-        value: "-Xmx512m"
-    healthCheckPath: /api/mcp/health
+        value: mcp-standalone # Specific profile for this service
+      - key: JAVA_OPTS # Passed to the JVM inside the container
+        value: "-Xmx512m -Dserver.port=${PORT}" # IMPORTANT: Inject Render's PORT here!
+      # Add other MCP-specific env vars here
+    healthCheckPath: /api/mcp/health # Ensure this path is correct
     autoDeploy: true
+    # Optional: Specify Docker build context if Dockerfile isn't in the root
+    # dockerContext: ./backend
