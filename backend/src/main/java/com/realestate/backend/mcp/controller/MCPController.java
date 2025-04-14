@@ -1,5 +1,4 @@
 package com.realestate.backend.mcp.controller;
-
 import com.realestate.backend.mcp.model.MCPRequest;
 import com.realestate.backend.mcp.model.MCPResponse;
 import com.realestate.backend.mcp.model.MCPServerInfo;
@@ -8,12 +7,12 @@ import com.realestate.backend.mcp.service.MCPExecutionService;
 import com.realestate.backend.mcp.service.MCPToolService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
 import java.util.List;
 import java.util.Map;
 
 /**
  * Controller for handling MCP protocol requests.
+ * Implements the Model Context Protocol specification for LLM integration.
  */
 @RestController
 @RequestMapping("/api/mcp")
@@ -39,6 +38,7 @@ public class MCPController {
     
     /**
      * Executes a tool call based on the request.
+     * This endpoint follows the MCP specification for tool execution.
      * 
      * @param request The MCP request
      * @return The execution result
@@ -65,6 +65,7 @@ public class MCPController {
     
     /**
      * Returns server information including available tools.
+     * This is the main endpoint that LLMs will call to discover available tools.
      * 
      * @return Server information
      */
