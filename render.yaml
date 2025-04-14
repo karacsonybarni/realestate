@@ -22,23 +22,3 @@ services:
     autoDeploy: true
     # Optional: Specify Docker build context if Dockerfile isn't in the root
     # dockerContext: ./backend
-
-  # MCP Server Service (Using the SAME Dockerfile, different start command)
-  - type: web
-    name: realestate-mcp
-    runtime: docker # Specify Docker runtime
-    dockerfilePath: ./Dockerfile # Path to your Dockerfile
-    repo: https://github.com/karacsonybarni/realestate.git
-    branch: feature/mcp-server-implementation # Different branch for this service
-    # Override the Dockerfile's ENTRYPOINT/CMD with a specific start command
-    dockerCommand: java -cp app.jar com.realestate.backend.mcp.MCPServerApplication # Command to run inside the container
-    envVars:
-      - key: SPRING_PROFILES_ACTIVE
-        value: mcp-standalone # Specific profile for this service
-      - key: JAVA_OPTS # Passed to the JVM inside the container
-        value: "-Xmx512m -Dserver.port=${PORT}" # IMPORTANT: Inject Render's PORT here!
-      # Add other MCP-specific env vars here
-    healthCheckPath: /api/mcp/health # Ensure this path is correct
-    autoDeploy: true
-    # Optional: Specify Docker build context if Dockerfile isn't in the root
-    # dockerContext: ./backend
