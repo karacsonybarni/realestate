@@ -46,5 +46,14 @@ public class PropertyController {
     public void deleteProperty(@PathVariable Long id) {
         propertyService.deleteProperty(id);
     }
-}
 
+    @GetMapping("/recommendations")
+    public String getPropertyRecommendations(@RequestParam Long userId) {
+        return propertyService.getPropertyRecommendations(userId);
+    }
+
+    @GetMapping("/notifications")
+    public String getPersonalizedNotifications(@RequestParam Long userId) {
+        return propertyService.getPersonalizedNotifications(userId);
+    }
+}

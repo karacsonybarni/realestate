@@ -40,5 +40,25 @@ public class UserService {
         AppUser existing = getUserById(id);
         userRepository.delete(existing);
     }
-}
 
+    public String subscribeToPremium(Long userId) {
+        AppUser user = getUserById(userId);
+        // Logic to subscribe user to premium features
+        // For demonstration, just return a success message
+        return "User with ID: " + userId + " has been subscribed to premium features.";
+    }
+
+    public String unsubscribeFromPremium(Long userId) {
+        AppUser user = getUserById(userId);
+        // Logic to unsubscribe user from premium features
+        // For demonstration, just return a success message
+        return "User with ID: " + userId + " has been unsubscribed from premium features.";
+    }
+
+    public String getPremiumFeature(Long userId) {
+        AppUser user = getUserById(userId);
+        // Logic to provide premium feature to the user
+        // For demonstration, just return a premium feature message
+        return "Premium feature for user with ID: " + userId;
+    }
+}
