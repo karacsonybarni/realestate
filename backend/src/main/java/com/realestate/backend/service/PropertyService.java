@@ -26,7 +26,10 @@ public class PropertyService {
 
     @Transactional
     public Property createProperty(PropertyRequest request) {
-        Optional<AppUser> ownerOpt = userRepository.findById(request.getOwnerId());
+        long ownerId = request.getOwnerId() != null
+                ? request.getOwnerId()
+                : 1;
+        Optional<AppUser> ownerOpt = userRepository.findById(ownerId);
         if (ownerOpt.isEmpty()) {
             throw new RuntimeException("Owner not found with ID: " + request.getOwnerId());
         }
