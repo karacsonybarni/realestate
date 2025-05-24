@@ -9,7 +9,12 @@ public class WebConfiguration implements WebMvcConfigurer {
 
     @Override
     public void addResourceHandlers(ResourceHandlerRegistry registry) {
+        // Handle .well-known directory
         registry.addResourceHandler("/.well-known/**")
                 .addResourceLocations("classpath:/.well-known/");
+
+        // Handle privacy.md
+        registry.addResourceHandler("/privacy/**")
+                .addResourceLocations("classpath:/privacy/");
     }
 }
