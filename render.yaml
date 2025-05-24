@@ -1,0 +1,24 @@
+services:
+  # Spring Boot Backend Service (Using Docker)
+  - type: web
+    name: realestate-backend
+    runtime: docker # Specify Docker runtime
+    dockerfilePath: ./Dockerfile # Path to your Dockerfile from the repo root
+    repo: https://github.com/karacsonybarni/realestate.git
+    branch: main
+    # buildCommand and startCommand are NOT needed when runtime: docker is used
+    # The Dockerfile defines the build and start process
+    envVars:
+      - key: SPRING_PROFILES_ACTIVE
+        value: prod # Overrides the ENV in Dockerfile if needed
+      - key: JAVA_OPTS # Passed to the JVM inside the container
+        value: "-Xmx512m -Dserver.port=${PORT}" # IMPORTANT: Inject Render's PORT here!
+      # Add other backend-specific env vars here (DB URLs, secrets, etc.)
+      # - key: DATABASE_URL
+      #   fromDatabase:
+      #     name: your-db-name
+      #     property: connectionString
+    healthCheckPath: /actuator/health # Ensure this path is correct within your app
+    autoDeploy: true
+    # Optional: Specify Docker build context if Dockerfile isn't in the root
+    # dockerContext: ./backend

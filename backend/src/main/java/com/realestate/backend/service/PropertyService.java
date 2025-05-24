@@ -17,31 +17,23 @@ public class PropertyService {
 
     private final PropertyRepository propertyRepository;
     private final AppUserRepository userRepository;
-    private final AiService aiService;
 
     public PropertyService(PropertyRepository propertyRepository,
-                           AppUserRepository userRepository,
-                           AiService aiService) {
+                           AppUserRepository userRepository) {
         this.propertyRepository = propertyRepository;
         this.userRepository = userRepository;
-        this.aiService = aiService;
     }
 
     @Transactional
     public Property createProperty(PropertyRequest request) {
-        Optional<AppUser> ownerOpt = userRepository.findById(request.getOwnerId());
+        long ownerId = request.getOwnerId() != null
+                ? request.getOwnerId()
+                : 1;
+        Optional<AppUser> ownerOpt = userRepository.findById(ownerId);
         if (ownerOpt.isEmpty()) {
             throw new RuntimeException("Owner not found with ID: " + request.getOwnerId());
         }
         AppUser owner = ownerOpt.get();
-
-        // Ask AI for suggestions
-        String suggestions = aiService.suggestPropertyImprovements(
-                request.getTitle(), request.getDescription(), request.getLocation()
-        );
-        // In real scenarios, you might parse suggestions or store them.
-        // For demonstration, just log or print them:
-        System.out.println("AI suggestions: " + suggestions);
 
         // Build property
         Property property = Property.builder()
